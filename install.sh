@@ -78,4 +78,5 @@ echo "FINISHED INSTALLING REQUIMENTS!!!"
 echo ""
 echo "DONE!!"
 echo ""
+echo "If you get error messages from pip, try to install all the packages manually by using apt."
 exit 1

@@ -76,7 +76,7 @@ def show_popup():
     button2 = tk.Button(popup, text="boot fake fs", command=boot_fakefs, width=20, height=5)
     button1.pack(pady=10)
     button2.pack()
-    
+
 def show_popup2():
     popup = tk.Toplevel()
     popup.geometry("300x200")  # set the width and height of the window
@@ -96,18 +96,18 @@ def show_popup2():
     button2 = tk.Button(popup, text="bypass ios 15-16.6", command=icloudbypassios16, width=20, height=5)
     button1.pack(pady=10)
     button2.pack()
-    
+
 def build_fakefs():
-    messagebox.showinfo("", "Please put the device first in recovery mode and then into dfu mode after the device is in dfu click ok")
+    messagebox.showinfo("", "Follow the instructions in the terminal (Palera1n will tell you what to do.)")
     # Display a message box with a yes/no option
-    response = messagebox.askyesno("iphone?", "Do you have a A9 device?")
+    response = messagebox.askyesno("iPhone?", "Do you have a A9 device?")
 
     # Check the user's response and execute the appropriate command
     if response == 1:  # Yes
         # Run the command in a subprocess
-        if system_name == "posix":
+        if system_name == "darwin":
             process = subprocess.Popen(["./device/Darwin/palera1n", "-cf"], preexec_fn=os.setsid)
-        elif system_name == "darwin":
+        elif system_name == "posix":
             process = subprocess.Popen(["./device/Linux/palera1n", "-cf"], preexec_fn=os.setsid)
         # Wait for 8 seconds or until the process completes
         for i in range(20):
@@ -119,28 +119,28 @@ def build_fakefs():
         if process.poll() is None:
             os.killpg(os.getpgid(process.pid), signal.SIGTERM)
 
-        if system_name == "posix":
+        if system_name == "darwin":
             os.system("./device/Darwin/palera1n -cf")
-        elif system_name == "darwin":
+        elif system_name == "posix":
             os.system("./device/Linux/palera1n -cf")
     if response == 0:  # No
-        if system_name == "posix":
+        if system_name == "darwin":
             os.system("./device/Darwin/palera1n -cf")
-        elif system_name == "darwin":
+        elif system_name == "posix":
             os.system("./device/Linux/palera1n -cf")
     messagebox.showinfo("", "After the device boots you can boot the fake fs")
-    
+
 def boot_fakefs():
-    messagebox.showinfo("", "Please put the device first in recovery mode and then into dfu mode after the device is in dfu click ok")
+    messagebox.showinfo("", "Please follow instructions in the terminal(Palera1n)")
     # Display a message box with a yes/no option
-    response = messagebox.askyesno("iphone?", "Do you have a A9 device?")
+    response = messagebox.askyesno("iPhone?", "Do you have a A9 device?")
 
     # Check the user's response and execute the appropriate command
     if response == 1:  # Yes
         # Run the command in a subprocess
-        if system_name == "posix":
+        if system_name == "darwin":
             process = subprocess.Popen(["./device/Darwin/palera1n", "-f"], preexec_fn=os.setsid)
-        elif system_name == "darwin":
+        elif system_name == "posix":
             process = subprocess.Popen(["./device/Linux/palera1n", "-f"], preexec_fn=os.setsid)
         # Wait for 8 seconds or until the process completes
         for i in range(20):
@@ -152,32 +152,32 @@ def boot_fakefs():
         if process.poll() is None:
             os.killpg(os.getpgid(process.pid), signal.SIGTERM)
 
-        if system_name == "posix":
+        if system_name == "darwin":
             os.system("./device/Darwin/palera1n -f")
-        elif system_name == "darwin":
+        elif system_name == "posix":
             os.system("./device/Linux/palera1n -f")
     if response == 0:  # No
-        if system_name == "posix":
+        if system_name == "darwin":
             os.system("./device/Darwin/palera1n -f")
-        elif system_name == "darwin":
+        elif system_name == "posix":
             os.system("./device/Linux/palera1n -f")
     messagebox.showinfo("", "Now start the bypass")
 
-    
 
-    
+
+
 def icloudbypassios16():
 
-    showinfo('bypass!', 'We will now bypass your device! please jailbreak first with palera1n C!')
-    if system_name == "posix":
+    showinfo('bypass!', 'We will now bypass your device! Please jailbreak first with palera1n C!')
+    if system_name == "darwin":
         os.system("bash ./device/Darwin/bypass.sh")
-    elif system_name == "darwin":
+    elif system_name == "posix":
         os.system("bash ./device/Linux/bypass.sh")
 
     print("Device is bypassed\n")
     showinfo('bypass Success!', 'Device is now bypassed!')
-        
-    
+
+
 
 
 def clear():
@@ -200,10 +200,8 @@ def clear():
 def quitProgram():
     print("Exiting...")
     os.system("exit")
-    
-def opentwitter():
-    webbrowser.open('https://www.twitter.com/hackt1vator', new=2)
-    
+
+
 def startbypass():
     global LAST_CONNECTED_UDID, LAST_CONNECTED_IOS_VER
     # step 1 technically
@@ -270,13 +268,13 @@ def startbypass():
 
     #check if theres a valid string to continue to reversing jb
     if(len(LAST_CONNECTED_IOS_VER) < 2):
-        showinfo('jailbreak Failed', 'Give me a valid iOS version.')
+        showinfo('jailbreak Failed', 'Retry and follow carefully Palera1n instructions.')
     else:
         showinfo('Ready to Jailbreak...', 'Hi, iOS '+str(LAST_CONNECTED_IOS_VER)+'. \n\nWe will now bypass iOS '+str(LAST_CONNECTED_IOS_VER)+' Semi-Tethered.')
         print("Starting jailbreak...")
         os.system("idevicepair unpair")
         os.system("idevicepair pair")
-        os.system(f"cd ./palera1n/ && ./palera1n.sh --tweaks --semi-tethered {LAST_CONNECTED_IOS_VER}")
+        os.system(f"cd ./palera1n/ && ./palera1n.sh --tweaks --semi-tethered 15.8.4")  # Please change the version to match your iOS version!
 
         print("Device is bypassed!\n")
         showinfo('bypass Success!', 'Device is now bypassed!')
@@ -295,10 +293,10 @@ def exitRecMode():
     elif system_name == "darwin":
         os.system("./device/Darwin/exitrecovery.sh")
     print("Kicking device out recovery mode...")
-    
 
 
-root.title('applera1n bypass - Made by @hackt1vator')
+
+root.title('applera1n bypass - Made by @LounaUwU and Raphooz')
 frame.pack()
 
 #set image and resize it
@@ -350,17 +348,8 @@ cButton5 = tk.Button(frame,
                    command=show_popup,
                    state="normal")
 cButton5.place(x=50, y=160)
-#Create a Label to display the link
-link = Label(root, text="Made this tool @hackt1vator",font=('Helveticabold', 12), cursor="hand2")
-link.place(x=165, y=220)
-link.bind("<Button-1>", lambda e:
-callback("https://twitter.com/hackt1vator"))
 
-cbeginExploit2 = tk.Button(frame,
-                   text="Twitter!",
-                   command=opentwitter,
-                   state="normal")
-cbeginExploit2.place(x=380, y=210)
+
 
 root.geometry("500x250")
 
@@ -370,4 +359,3 @@ root.eval('tk::PlaceWindow . center')
 
 
 root.mainloop()
-
